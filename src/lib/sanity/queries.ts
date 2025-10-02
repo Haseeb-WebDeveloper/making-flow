@@ -1,0 +1,1 @@
+// Here we will have all the queries for the sanity studio
