@@ -119,4 +119,72 @@
   body {
     @apply bg-background text-foreground font-poppins;
   }
+
+  /* Typography System - Based on Figmenta Design System */
+
+  /* Headings - Space Grotesk */
+  h1 {
+    @apply font-space-grotesk font-medium text-[85px] leading-tight;
+  }
+
+  h2 {
+    @apply font-space-grotesk font-semibold text-[52px] leading-tight;
+  }
+
+  h3 {
+    @apply font-space-grotesk font-normal text-[40px] leading-tight;
+  }
+
+  /* Paragraphs - Poppins */
+  p {
+    @apply font-poppins leading-relaxed;
+  }
+
+  /* Paragraph Size 21px */
+  .text-p-21 {
+    @apply font-poppins text-[21px] leading-relaxed;
+  }
+
+  .text-p-21-medium {
+    @apply font-poppins font-medium text-[21px] leading-relaxed;
+  }
+
+  .text-p-21-bold {
+    @apply font-poppins font-bold text-[21px] leading-relaxed;
+  }
+
+  /* Paragraph Size 18px */
+  .text-p-18 {
+    @apply font-poppins text-[18px] leading-relaxed;
+  }
+
+  .text-p-18-medium {
+    @apply font-poppins font-medium text-[18px] leading-relaxed;
+  }
+
+  .text-p-18-bold {
+    @apply font-poppins font-bold text-[18px] leading-relaxed;
+  }
+
+  /* Paragraph Size 16px */
+  .text-p-16 {
+    @apply font-poppins text-base leading-relaxed;
+  }
+
+  .text-p-16-medium {
+    @apply font-poppins font-medium text-base leading-relaxed;
+  }
+
+  .text-p-16-bold {
+    @apply font-poppins font-bold text-base leading-relaxed;
+  }
+
+  /* Paragraph Size 14px */
+  .text-p-14 {
+    @apply font-poppins text-sm leading-relaxed;
+  }
+
+  .text-p-14-bold {
+    @apply font-poppins font-bold text-sm leading-relaxed;
+  }
 }
