@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import SmoothScrolling from "@/components/smooth-scroll";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -27,9 +28,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-          className={`${poppins.variable} ${spaceGrotesk.variable} antialiased`}
+        className={`${poppins.variable} ${spaceGrotesk.variable} antialiased`}
       >
-        {children}
+        <SmoothScrolling>{children}</SmoothScrolling>
       </body>
     </html>
   );
