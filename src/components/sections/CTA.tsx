@@ -5,11 +5,11 @@ import { motion } from "framer-motion";
 
 export default function CTA() {
   return (
-    <section className="bg-white py-20 px-8 relative overflow-hidden">
-      <div className="max-w-4xl mx-auto text-center relative z-10">
-        {/* Animated background circle */}
+    <section className="bg-white pt-20 px-8 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto text-center pb-20 relative z-10">
+        {/* Animated background semi-circle */}
         <motion.div
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-100 rounded-full -z-10"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-blue-100 rounded-t-full -z-10"
           animate={{
             scale: [1, 1.05, 1],
           }}
@@ -26,9 +26,9 @@ export default function CTA() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-4xl md:text-6xl font-bold mb-6">
-            <span className="text-gray-900">Ready To</span>
+            <span className="text-[#0E3067]">Ready To</span>
             <br />
-            <span className="text-blue-600">Make It Flow?</span>
+            <span className="text-[#0E3067]">Make It Flow?</span>
           </h2>
           <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
             Let&apos;s Turn Complexity Into Clarity And Build What Matters Most.

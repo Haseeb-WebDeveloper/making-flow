@@ -9,7 +9,7 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -22,9 +22,23 @@ export default function Header({ onNavigate }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // Track scroll for Hero section animation
+  const { scrollY } = useScroll();
+
+  // Hero section is 200vh, calculate scroll progress within that range
+  const heroHeight = typeof window !== 'undefined' ? window.innerHeight * 2 : 2000;
+
+  // All header elements slide in together from right during Hero animation
+  const headerOpacity = useTransform(scrollY, [0, heroHeight * 0.4], [0, 1]);
+  const headerX = useTransform(scrollY, [0, heroHeight * 0.4], [200, 0]);
+
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
+      // Hero section is 200vh tall
+      const heroSectionHeight = window.innerHeight * 2;
+
+      // Change background to white after scrolling past Hero section
+      if (window.scrollY > heroSectionHeight) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -44,61 +58,68 @@ export default function Header({ onNavigate }: HeaderProps) {
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed py-4 top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled ? "bg-white shadow-lg py-0" : "bg-transparent py-4 sm:py-6"
       }`}
-      initial={{ opacity: 1, y: 0 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0 }}
     >
-      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Logo - Top Left */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        {/* Logo - Top Left - slides in from right */}
         <motion.div
           className="flex items-center z-50"
+          style={{
+            opacity: headerOpacity,
+            x: headerX
+          }}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
         >
           <Image
             src={scrolled ? "/7 (1).svg" : "/7.svg"}
             alt="Logo"
-            width={60}
-            height={60}
-            className={`transition-all duration-300 `}
+            width={scrolled ? 50 : 100}
+            height={scrolled ? 50 : 100}
+            className={`transition-all duration-300 ${scrolled ? "w-[150px] h-[150px]" : "w-[150px] h-[150px]"}`}
           />
         </motion.div>
 
-        {/* Desktop Navigation - Top Right */}
-        <nav className="hidden lg:flex items-center gap-4 lg:gap-6">
+        {/* Desktop Navigation - Top Right - slides in from right */}
+        <motion.nav
+          className="hidden lg:flex items-center gap-4 lg:gap-6"
+          style={{
+            opacity: headerOpacity,
+            x: headerX
+          }}
+        >
           <button
-            className={`text-sm lg:text-base font-medium transition-all px-4 lg:px-6 py-2 lg:py-3 rounded-full border ${
+            className={`text-sm lg:text-base font-bold transition-all px-4 lg:px-6 py-2 lg:py-3 rounded-[49px] border ${
               scrolled
-                ? "text-blue-600 border-blue-600/30 hover:bg-blue-50"
-                : "text-white border-white/30 hover:bg-white/10"
+                ? "text-blue-600 bg-[#1A68E433] border-blue-600/30 hover:bg-blue-50"
+                : "text-white bg-white/20 border-white/20 hover:bg-white/10"
             }`}
             onClick={() => handleNavClick("whatWeDo")}
           >
-            What We Do
+            what we do
           </button>
           <button
-            className={`text-sm lg:text-base font-medium transition-all px-4 lg:px-6 py-2 lg:py-3 rounded-full border ${
+            className={`text-sm lg:text-base font-bold transition-all px-4 lg:px-6 py-2 lg:py-3 rounded-[49px] border ${
               scrolled
-                ? "text-blue-600 border-blue-600/30 hover:bg-blue-50"
-                : "text-white border-white/30 hover:bg-white/10"
+                ? "text-blue-600 bg-[#1A68E433] border-blue-600/30 hover:bg-blue-50"
+                : "text-white bg-white/20 border-white/20 hover:bg-white/10"
             }`}
             onClick={() => handleNavClick("pricing")}
           >
             Pricing
           </button>
           <Button
-            className={`rounded-full px-6 lg:px-8 py-4 lg:py-6 text-sm lg:text-base font-semibold transition-all hover:scale-105 ${
+            className={`rounded-[42px] px-6 lg:px-20 py-2.5 h-auto text-sm lg:text-base font-bold transition-all hover:scale-105 border-[7px] ${
               scrolled
-                ? "bg-blue-600 text-white hover:bg-blue-700"
-                : "bg-white text-blue-600 hover:bg-gray-100"
+                ? "bg-[#1A68E433] text-blue-600 border-blue-600/30 hover:bg-blue-50"
+                : "bg-white text-[#1A68E4] border-white/20 hover:bg-gray-100"
             }`}
           >
-            Schedule A Call
+            Schedule a call
           </Button>
-        </nav>
+        </motion.nav>
 
         {/* Mobile & Tablet Navigation - Hamburger Menu */}
         <div className="lg:hidden">
@@ -118,7 +139,7 @@ export default function Header({ onNavigate }: HeaderProps) {
             </SheetTrigger>
             <SheetContent
               side="right"
-              className="bg-gradient-to-b from-[#1D4ED8] to-[#2563EB] border-0 w-[85vw] sm:w-[400px]"
+              className="bg-gradient-to-b from-[#1D4ED8] to-[#2563EB] border-0 w-[85vw] sm:w-[400px] max-w-[400px]"
             >
               <SheetHeader className="border-b border-white/20 pb-4">
                 <div className="flex items-center justify-between">

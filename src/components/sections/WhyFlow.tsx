@@ -97,22 +97,50 @@ export default function WhyFlow() {
         </motion.h2>
 
         <div ref={timelineRef} className="relative">
-          {/* Central Timeline Line - Background (gray) */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gray-300 transform -translate-x-1/2" />
+          {/* Central Timeline Line - Background (gray) - Hidden on mobile, visible on md and up */}
+          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-gray-300 transform -translate-x-1/2" />
 
-          {/* Central Timeline Line - Animated (blue) */}
+          {/* Right Timeline Line - Background (gray) - Visible only on mobile */}
+          <div className="md:hidden absolute right-0 top-0 bottom-0 w-1 bg-gray-300" />
+
+          {/* Central Timeline Line - Animated (blue) - Hidden on mobile, visible on md and up */}
           <motion.div
-            className="absolute left-1/2 top-0 w-1 bg-blue-600 transform -translate-x-1/2 origin-top"
+            className="hidden md:block absolute left-1/2 top-0 w-1 bg-blue-600 transform -translate-x-1/2 origin-top"
+            style={{ height: timelineHeight }}
+          />
+
+          {/* Right Timeline Line - Animated (blue) - Visible only on mobile */}
+          <motion.div
+            className="md:hidden absolute right-0 top-0 w-1 bg-blue-600 origin-top"
             style={{ height: timelineHeight }}
           />
 
           <div className="space-y-32">
             {timeline.map((item, index) => (
-              <div key={index} className="relative flex items-center justify-between">
-                {/* Background Text with scroll-based opacity */}
+              <div
+                key={index}
+                className="relative flex items-center justify-between"
+              >
+                {/* Background Text with scroll-based opacity - Mobile positioning */}
                 <motion.div
-                  className={`absolute text-[8rem] md:text-[12rem] font-bold text-gray-200 leading-none pointer-events-none ${
-                    item.position === "left" ? "left-1/2 ml-16" : "right-1/2 mr-16"
+                  className={`absolute md:hidden text-[4rem] font-bold text-gray-200 leading-none pointer-events-none ${
+                    item.position === "left" ? "right-16" : "left-16"
+                  }`}
+                  style={{
+                    top: "120%",
+                    transform: "translateY(-50%)",
+                    opacity: opacities[index],
+                  }}
+                >
+                  {item.backgroundText}
+                </motion.div>
+
+                {/* Background Text with scroll-based opacity - Desktop positioning */}
+                <motion.div
+                  className={`absolute hidden md:block text-[8rem] lg:text-[12rem] font-bold text-gray-200 leading-none pointer-events-none ${
+                    item.position === "left"
+                      ? "left-1/2 ml-16"
+                      : "right-1/2 mr-16"
                   }`}
                   style={{
                     top: "50%",
@@ -123,9 +151,9 @@ export default function WhyFlow() {
                   {item.backgroundText}
                 </motion.div>
 
-                {/* Left Content */}
+                {/* Left Content - Desktop */}
                 {item.position === "left" ? (
-                  <div className="w-1/2 pr-16">
+                  <div className="hidden md:block w-1/2 pr-16">
                     <motion.div
                       className="flex flex-col items-end text-right"
                       initial={{
@@ -155,12 +183,12 @@ export default function WhyFlow() {
                     </motion.div>
                   </div>
                 ) : (
-                  <div className="w-1/2"></div>
+                  <div className="hidden md:w-1/2 md:block"></div>
                 )}
 
-                {/* Timeline Dot */}
+                {/* Timeline Dot - Desktop */}
                 <motion.div
-                  className="absolute left-1/2 top-1/2 w-6 h-6 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10"
+                  className="hidden md:block absolute left-1/2 top-1/2 w-6 h-6 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10"
                   style={{ backgroundColor: dotColors[index] }}
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
@@ -173,9 +201,9 @@ export default function WhyFlow() {
                   ></motion.div>
                 </motion.div>
 
-                {/* Right Content */}
+                {/* Right Content - Desktop */}
                 {item.position === "right" ? (
-                  <div className="w-1/2 pl-16">
+                  <div className="hidden md:block w-1/2 pl-16">
                     <motion.div
                       className="flex flex-col items-start text-left"
                       initial={{
@@ -205,8 +233,54 @@ export default function WhyFlow() {
                     </motion.div>
                   </div>
                 ) : (
-                  <div className="w-1/2"></div>
+                  <div className="hidden md:w-1/2 md:block"></div>
                 )}
+
+                {/* Mobile Layout - Timeline on right, content on left */}
+                <div className="md:hidden w-full pr-8">
+                  <motion.div
+                    className="flex flex-col items-start text-left"
+                    initial={{
+                      opacity: 0,
+                      x: 50,
+                      y: 30,
+                    }}
+                    whileInView={{ opacity: 1, x: 0, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{
+                      duration: 0.8,
+                      delay: 0.2,
+                    }}
+                  >
+                    {/* Icon */}
+                    <div className="text-4xl md:text-6xl mb-4">{item.icon}</div>
+
+                    {/* Title */}
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
+                      {item.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-gray-700 text-base md:text-lg">
+                      {item.description}
+                    </p>
+                  </motion.div>
+                </div>
+
+                {/* Timeline Dot - Mobile */}
+                <motion.div
+                  className="md:hidden absolute right-0 top-1/2 w-4 h-4 rounded-full transform translate-x-1/2 -translate-y-1/2 z-10"
+                  style={{ backgroundColor: dotColors[index] }}
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.3 }}
+                >
+                  <motion.div
+                    className="absolute inset-0 rounded-full animate-ping opacity-20"
+                    style={{ backgroundColor: dotColors[index] }}
+                  ></motion.div>
+                </motion.div>
               </div>
             ))}
           </div>
