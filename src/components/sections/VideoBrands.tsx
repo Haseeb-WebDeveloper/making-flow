@@ -5,21 +5,21 @@ import { useRef } from "react";
 import Image from "next/image";
 
 const brands = [
-  { name: "Wella", logo: "/1 1.svg" },
-  { name: "Veuve Clicquot", logo: "/4 1.svg" },
-  { name: "Davines", logo: "/2 1.svg" },
-  { name: "LVMH", logo: "/3 1.svg" },
-  { name: "Oral-B", logo: "/7 1.svg" },
-  { name: "Jeep", logo: "/6 1.svg" },
-  { name: "Braun", logo: "/8 1.svg" },
-  { name: "Burger King", logo: "/5 1.svg" },
+  { name: "Wella", logo: "/sm-67d67918f10df-Wella-Professionals 1.svg" },
+  { name: "Veuve Clicquot", logo: "/Veuve-Clicquot-Logo 1.svg" },
+  { name: "Davines", logo: "/Davines_logo_black.png" },
+  { name: "LVMH", logo: "/LVMH-black.png" },
+  { name: "Oral-B", logo: "/oral-b 1.svg" },
+  { name: "Jeep", logo: "/Jeep_logo.svg 1.svg" },
+  { name: "Braun", logo: "/Braun_Logo.svg.png" },
+  { name: "Burger King", logo: "/burger-king-logo-black-and-white-1.png" },
 ];
 
 export default function VideoBrands() {
   return (
     <>
       {/* About Section */}
-      <section className="bg-white py-20 px-8">
+      <section className="bg-white mt-35 py-20 px-8">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             className="mb-20"
@@ -94,7 +94,7 @@ export default function VideoBrands() {
                     height={100}
                     src={brand.logo}
                     alt={brand.logo}
-                    className="w-full h-full object-contain group-hover:saturate-100 group-hover:contrast-900 group-hover:brightness-100"
+                    className="w-full h-full object-contain opacity-40 hover:opacity-100 group-hover:saturate-100 group-hover:contrast-900 group-hover:brightness-100"
                   />
                 </motion.div>
               ))}

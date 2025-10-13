@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  // Disable experimental features that cause Windows permission issues
+  experimental: {
+    // @ts-ignore
+    disableOptimizedLoading: true,
+  },
 };
 
 export default nextConfig;

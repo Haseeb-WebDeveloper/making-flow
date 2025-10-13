@@ -22,8 +22,8 @@ export default function Home() {
     window.scrollTo(0, 0);
 
     // Also handle page refresh/reload
-    if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual';
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
     }
   }, []);
 
@@ -48,12 +48,14 @@ export default function Home() {
       <Header onNavigate={scrollToSection} />
 
       {/* Hero Section - Unified intro + hero animation */}
-      <Hero />
+      <div className="relative z-10">
+        <Hero />
+      </div>
 
-      
-
-      {/* Video and Brands Section */}
-      <VideoBrands />
+      {/* Video and Brands Section - Overlapping section */}
+      <div className="relative z-20">
+        <VideoBrands />
+      </div>
 
       {/* What We Do Section */}
       <div ref={whatWeDoRef}>
