@@ -19,7 +19,7 @@ export default function Hero() {
   const heroText2Y = useTransform(scrollYProgress, [0.2, 0.4], [50, 0]);
 
   return (
-    <section ref={containerRef} className="relative h-[150vh]">
+    <section ref={containerRef} className="relative h-[155vh]">
       {/* Sticky container - remains sticky throughout */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Blue gradient background */}
@@ -28,7 +28,7 @@ export default function Hero() {
         <div className="absolute inset-0 flex items-end justify-center z-30 px-8">
           <div className="text-center max-w-6xl">
             <motion.h2
-              className="text-white text-5xl md:text-[86px] font-normal uppercase mb-16 leading-[150%] tracking-[-1.884px] font-['Space_Grotesk']"
+              className="text-white text-5xl md:text-[86px] font-normal uppercase mb-20 leading-[150%] tracking-[-1.884px] font-['Space_Grotesk']"
               style={{
                 opacity: heroText1Opacity,
                 y: heroText1Y,

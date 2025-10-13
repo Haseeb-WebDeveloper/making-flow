@@ -9,7 +9,7 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -25,42 +25,54 @@ export default function Header({ onNavigate }: HeaderProps) {
   // Track scroll for Hero section animation
   const { scrollY } = useScroll();
 
+  // Add spring physics for smoother animations regardless of scroll speed
+  const springConfig = { damping: 30, stiffness: 300, mass: 0.5 };
+  const smoothScrollY = useSpring(scrollY, springConfig);
+
   // Hero section is 150vh (based on Hero.tsx), calculate scroll progress within that range
   const heroHeight =
     typeof window !== "undefined" ? window.innerHeight * 1.5 : 1500;
 
-  // Black screen animation - fades out as user scrolls
+  // Black screen animation - fades out smoothly as user scrolls with spring physics
   const blackScreenOpacity = useTransform(
-    scrollY,
-    [0, heroHeight * 0.3],
+    smoothScrollY,
+    [0, heroHeight * 0.4],
     [1, 0]
   );
 
-  // Logo animation - moves from center to top-left
-  const logoScale = useTransform(scrollY, [0, heroHeight * 0.4], [1, 0.25]);
-  const logoX = useTransform(scrollY, [0, heroHeight * 0.4], [0, -650]);
-  const logoY = useTransform(scrollY, [0, heroHeight * 0.4], [0, -380]);
+  // Logo animation - moves from center to top-left with spring physics
+  const logoScale = useTransform(
+    smoothScrollY,
+    [0, heroHeight * 0.5],
+    [1, 0.25]
+  );
+  const logoX = useTransform(smoothScrollY, [0, heroHeight * 0.5], [0, -650]);
+  const logoY = useTransform(smoothScrollY, [0, heroHeight * 0.5], [0, -380]);
 
-  // Logo color - white on black, then normal colors
-  const logoInvert = useTransform(scrollY, [0, heroHeight * 0.3], [1, 0]);
-  const logoBrightness = useTransform(scrollY, [0, heroHeight * 0.3], [10, 1]);
+  // Logo color - white on black, then normal colors with smoother transition
+  const logoInvert = useTransform(smoothScrollY, [0, heroHeight * 0.4], [1, 0]);
+  const logoBrightness = useTransform(
+    smoothScrollY,
+    [0, heroHeight * 0.4],
+    [10, 1]
+  );
 
-  // All header elements appear when Hero logo fades out
+  // All header elements appear when Hero logo fades out with spring physics
   const headerOpacity = useTransform(
-    scrollY,
-    [heroHeight * 0.35, heroHeight * 0.45],
+    smoothScrollY,
+    [heroHeight * 0.3, heroHeight * 0.4],
     [0, 1]
   );
   const headerX = useTransform(
-    scrollY,
-    [heroHeight * 0.35, heroHeight * 0.45],
+    smoothScrollY,
+    [heroHeight * 0.3, heroHeight * 0.6],
     [50, 0]
   );
 
-  // Hide hamburger menu during black screen (0 to 0.3 scroll progress)
+  // Hide hamburger menu during black screen (0 to 0.3 scroll progress) with spring physics
   const mobileMenuOpacity = useTransform(
-    scrollY,
-    [0, heroHeight * 0.3, heroHeight * 0.4],
+    smoothScrollY,
+    [0, heroHeight * 0.2, heroHeight * 0.4],
     [0, 0, 1]
   );
 
@@ -90,13 +102,13 @@ export default function Header({ onNavigate }: HeaderProps) {
 
   return (
     <>
-      {/* Black screen overlay - fades out as user scrolls */}
+      {/* Black screen overlay - fades out smoothly as user scrolls with spring physics */}
       <motion.div
         className="fixed inset-0 bg-black z-40 pointer-events-none"
         style={{ opacity: blackScreenOpacity }}
       />
 
-      {/* Animated Logo - moves from center to header position */}
+      {/* Animated Logo - moves from center to header position with spring physics */}
       {!scrolled && (
         <motion.div
           style={{
@@ -105,11 +117,13 @@ export default function Header({ onNavigate }: HeaderProps) {
             y: logoY,
           }}
           className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none"
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
         >
           <motion.div
             style={{
               filter: `invert(${logoInvert}) brightness(${logoBrightness})`,
             }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
           >
             <Image
               src="/7.svg"
@@ -128,7 +142,7 @@ export default function Header({ onNavigate }: HeaderProps) {
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3 }}
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
           className="fixed top-3 left-8 z-[100]"
         >
           <Image
@@ -143,7 +157,7 @@ export default function Header({ onNavigate }: HeaderProps) {
       )}
 
       <motion.header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
           scrolled ? "bg-white shadow-md py-3" : "bg-transparent py-2 sm:py-2"
         }`}
       >
@@ -162,6 +176,7 @@ export default function Header({ onNavigate }: HeaderProps) {
               opacity: headerOpacity,
               x: headerX,
             }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
           >
             <button
               className={`text-sm lg:text-base font-bold transition-all px-4 lg:px-6 py-2 lg:py-3 rounded-[49px] border ${
@@ -184,9 +199,9 @@ export default function Header({ onNavigate }: HeaderProps) {
               Pricing
             </button>
             <Button
-              className={`rounded-[42px] px-6 lg:px-20 py-2.5 h-auto text-sm lg:text-base font-bold transition-all hover:scale-105 border hover:border-[7px] ${
+              className={`rounded-[42px] px-6 lg:px-20 py-3 h-auto text-sm lg:text-base font-bold transition-all hover:scale-105 border hover:border-[7px] ${
                 scrolled
-                  ? "bg-[#1A68E433] text-blue-600 border-blue-600/30 hover:bg-blue-50"
+                  ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700"
                   : "bg-white text-[#1A68E4] border-white/20 hover:bg-gray-100"
               }`}
             >
@@ -200,6 +215,7 @@ export default function Header({ onNavigate }: HeaderProps) {
             style={{
               opacity: mobileMenuOpacity,
             }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
           >
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
