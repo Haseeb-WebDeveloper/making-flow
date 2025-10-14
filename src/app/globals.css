@@ -79,8 +79,7 @@
 }
 
 .we-make-flow-line-height {
-  line-height: 0.6;
-}
+  line-height: 1;}
 
 .dark {
   --background: oklch(0.145 0 0);

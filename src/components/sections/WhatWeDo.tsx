@@ -333,9 +333,9 @@ export default function WhatWeDo() {
             transition={{ duration: 0.3 }}
             className="h-full"
           >
-            <div className="max-w-6xl mx-auto pt-8 px-4">
+            <div className="max-w-6xl mx-auto">
               <motion.h2
-                className="text-4xl md:text-5xl font-bold mb-16 text-left"
+                className="text-4xl md:text-7xl font-bold mb-16 text-left"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

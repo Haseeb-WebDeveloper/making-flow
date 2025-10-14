@@ -87,7 +87,7 @@ export default function WhyFlow() {
     <section ref={sectionRef} className="bg-white py-20 px-8 relative">
       <div className="max-w-6xl mx-auto">
         <motion.h2
-          className="text-4xl md:text-5xl font-bold mb-20 text-left"
+          className="text-4xl md:text-6xl font-bold mb-20 text-left"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

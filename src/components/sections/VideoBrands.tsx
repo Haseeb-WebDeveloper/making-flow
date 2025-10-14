@@ -1,8 +1,12 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const brands = [
   { name: "Wella", logo: "/sm-67d67918f10df-Wella-Professionals 1.svg" },
@@ -16,17 +20,42 @@ const brands = [
 ];
 
 export default function VideoBrands() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    // Create parallax effect - section moves faster and overlaps hero
+    const ctx = gsap.context(() => {
+      gsap.to(sectionRef.current, {
+        yPercent: -35, // Moves up by 20% - increase for more overlap
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <>
+    <div ref={sectionRef} className="bg-white relative z-10 -mb-70">
       {/* About Section */}
-      <section className="bg-white mt-35 py-20 px-8">
+      <section className="pt-60 pb-12 px-8">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
-            className="mb-20"
-            initial={{ opacity: 0, y: 20 }}
+            className="mb-12"
+            initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{
+              duration: 0.8,
+              ease: "easeOut",
+            }}
           >
             <p className="text-2xl md:text-3xl font-semibold text-gray-800 leading-relaxed">
               We Are Figmenta&apos;s AI-First Solutions Hub, Responsible For
@@ -36,11 +65,11 @@ export default function VideoBrands() {
           </motion.div>
         </div>
       </section>
-      <section className="bg-white py-20 px-8">
+      <section className="pb-8 px-8">
         <div className="max-w-6xl mx-auto">
           {/* Video Section */}
           <motion.div
-            className="mb-20"
+            className="mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -68,40 +97,54 @@ export default function VideoBrands() {
           </motion.div>
 
           {/* Brands Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-blue-600">
+          <div className="relative">
+            {/* Title - Fades in from bottom to top */}
+            <motion.h2
+              className="text-3xl md:text-4xl font-bold text-center mb-12 text-blue-600"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
               Brands that trust us
-            </h2>
+            </motion.h2>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {/* Logos Grid - Fade in from bottom to top */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
               {brands.map((brand, index) => (
                 <motion.div
                   key={index}
-                  className="bg-gray-50 rounded-xl p-8 flex items-center justify-center aspect-square transition-colors group"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+                  className="bg-gray-50 rounded-xl p-8 flex items-center justify-center aspect-square group"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.05 }}
-                  whileHover={{ scale: 1.05 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: index * 0.1,
+                    ease: "easeOut",
+                  }}
+                  whileHover={{
+                    scale: 1.08,
+                    transition: {
+                      type: "spring",
+                      stiffness: 1000,
+                      damping: 50,
+                    },
+                  }}
                 >
                   <Image
                     width={100}
                     height={100}
                     src={brand.logo}
-                    alt={brand.logo}
-                    className="w-full h-full object-contain opacity-40 hover:opacity-100 group-hover:saturate-100 group-hover:contrast-900 group-hover:brightness-100"
+                    alt={brand.name}
+                    className="w-full h-full object-contain opacity-40 group-hover:opacity-100"
                   />
                 </motion.div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

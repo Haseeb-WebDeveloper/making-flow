@@ -121,7 +121,7 @@ export default function Pricing() {
             viewBox="0 0 1440 1900"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            style={{ width: "160%", height: "160%" }}
+            style={{ width: "130%", height: "130%" }}
             // preserveAspectRatio="none" // Ensure the SVG fits within the container"
 
           >
