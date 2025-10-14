@@ -37,18 +37,12 @@ export default function Footer() {
           {/* Logo and Description */}
           <motion.div variants={fadeInUp} className="md:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <Image src="/7.svg" alt="Logo" width={60} height={60} />
+              <Image src="/7.svg" alt="Logo" width={100} height={100} />
               <div className="text-white font-bold text-2xl tracking-tight">
-                <div className="flex flex-col leading-tight">
-                  <span>MAK</span>
-                  <span>ING</span>
-                  <span>FLOW</span>
-                </div>
+                
               </div>
             </div>
-            <p className="text-xs font-normal text-white/90 mb-4">
-              by FIGMENTA
-            </p>
+            
             <p className="text-white/80 text-sm max-w-sm">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra
               nunc ante aliquet etiam. Est tellus vitae, nullam lobortis enim.

@@ -12,11 +12,17 @@ export default function Hero() {
   });
 
   // Hero text fades in from bottom (with stagger and smoother transition)
-  const heroText1Opacity = useTransform(scrollYProgress, [0.15, 0.35], [0, 1]);
-  const heroText1Y = useTransform(scrollYProgress, [0.15, 0.35], [50, 0]);
+  // "We don't write code" fades out when scrolling past the hero section
+  const heroText1Opacity = useTransform(
+    scrollYProgress,
+    [0.15, 0.35, 0.5, 0.7],
+    [0, 1, 1, 0]
+  );
+  const heroText1Y = useTransform(scrollYProgress, [0.15, 0.35], [80, 0]);
 
+  // "We make flow" remains visible (no fade-out)
   const heroText2Opacity = useTransform(scrollYProgress, [0.2, 0.4], [0, 1]);
-  const heroText2Y = useTransform(scrollYProgress, [0.2, 0.4], [50, 0]);
+  const heroText2Y = useTransform(scrollYProgress, [0.2, 0.4], [80, 0]);
 
   return (
     <section ref={containerRef} className="relative h-[155vh]">
@@ -28,7 +34,7 @@ export default function Hero() {
         <div className="absolute inset-0 flex items-end justify-center z-30 px-8">
           <div className="text-center max-w-6xl">
             <motion.h2
-              className="text-white text-5xl md:text-[86px] font-normal uppercase mb-20 leading-[150%] tracking-[-1.884px] font-['Space_Grotesk']"
+              className="text-white text-5xl md:text-[86px] font-normal uppercase mb-6 leading-[150%] tracking-[-1.884px] font-['Space_Grotesk']"
               style={{
                 opacity: heroText1Opacity,
                 y: heroText1Y,
