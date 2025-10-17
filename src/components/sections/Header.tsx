@@ -150,7 +150,7 @@ export default function Header({ onNavigate }: HeaderProps) {
             alt="Making Flow Logo"
             width={80}
             height={80}
-            className="w-[70px] h-[70px] sm:w-[80px] sm:h-[80px] ml-50"
+            className="w-[70px] h-[70px] sm:w-[80px] sm:h-[80px] ml-0 md:ml-50"
             priority
           />
         </motion.div>
@@ -162,7 +162,7 @@ export default function Header({ onNavigate }: HeaderProps) {
         }`}
       >
         <div
-          className={`container mx-auto ${scrolled ? "py-2" : "py-10"} px-4 sm:px-6 lg:px-8 flex items-center justify-between relative z-50`}
+          className={`container mx-auto ${scrolled ? "py-4" : "py-10"} px-4 sm:px-6 lg:px-8 flex items-center justify-between relative z-50`}
         >
           {/* Empty space for logo alignment */}
           <div className="flex items-center">
@@ -198,18 +198,20 @@ export default function Header({ onNavigate }: HeaderProps) {
             >
               Pricing
             </button>
-            <Button
+            <button
               className={`rounded-[42px] px-6 lg:px-20 py-3 h-auto text-sm lg:text-base font-bold transition-all hover:scale-105 border hover:border-[7px] ${
                 scrolled
                   ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700"
                   : "bg-white text-[#1A68E4] border-white/20 hover:bg-gray-100"
               }`}
+              onClick={() => handleNavClick("faq")}
             >
               Schedule a call
-            </Button>
+            </button>
           </motion.nav>
 
           {/* Mobile & Tablet Navigation - Hamburger Menu */}
+          
           <motion.div
             className="lg:hidden"
             style={{
@@ -264,12 +266,12 @@ export default function Header({ onNavigate }: HeaderProps) {
                   >
                     Pricing
                   </button>
-                  <Button
-                    className="bg-white text-blue-600 hover:bg-gray-100 rounded-xl px-6 py-6 font-semibold text-base mt-4"
-                    onClick={() => setIsOpen(false)}
+                  <button
+                    className="bg-white text-blue-600 hover:bg-gray-100 rounded-xl px-6 py-6 font-semibold text-base mt-4 w-full"
+                    onClick={() => handleNavClick("faq")}
                   >
                     Schedule A Call
-                  </Button>
+                  </button>
                 </nav>
               </SheetContent>
             </Sheet>

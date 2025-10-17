@@ -32,9 +32,9 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A68E4] to-[#5891EA]" />
         {/* Hero text - fades in from bottom with stagger and smoother transition */}
         <div className="absolute inset-0 flex items-end justify-center z-30 px-8">
-          <div className="text-center max-w-6xl">
+          <div className="text-center max-w-6xl pb-16 md:pb-0">
             <motion.h2
-              className="text-white text-5xl md:text-[86px] font-normal uppercase mb-6 leading-[150%] tracking-[-1.884px] font-['Space_Grotesk']"
+              className="text-white text-2xl md:text-[86px] font-normal uppercase mb-6 leading-[150%] tracking-[-1.884px] font-['Space_Grotesk']"
               style={{
                 opacity: heroText1Opacity,
                 y: heroText1Y,
@@ -44,7 +44,7 @@ export default function Hero() {
               We don&apos;t write code.
             </motion.h2>
             <motion.h3
-              className="text-white text-6xl md:text-[164px] font-bold uppercase we-make-flow-line-height tracking-[-3.96px] font-['Space_Grotesk']"
+              className="text-white text-5xl md:text-[164px] font-bold uppercase we-make-flow-line-height tracking-[-3.96px] font-['Space_Grotesk']"
               style={{
                 opacity: heroText2Opacity,
                 y: heroText2Y,

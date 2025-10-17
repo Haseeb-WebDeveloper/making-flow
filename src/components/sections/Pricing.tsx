@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { getSectionDimensions } from "@/lib/getSectionDimensions";
+import Image from "next/image";
 
 interface PricingPlan {
   name: string;
@@ -18,7 +19,7 @@ interface PricingPlan {
 
 const pricingPlans: PricingPlan[] = [
   {
-    name: "Basic",
+    name: "4-month",
     price: "$19",
     period: "/month",
     features: [
@@ -29,27 +30,24 @@ const pricingPlans: PricingPlan[] = [
     isPopular: false,
   },
   {
-    name: "Essential",
-    price: "$59",
+    name: "3-month",
+    price: "$15",
     period: "/month",
     features: [
       "Consequat ex prsident",
       "Deserunt sit cupidatat",
       "Amet id ea et nisi cillum",
-      "Extra feature included",
     ],
     isPopular: true,
   },
   {
-    name: "Premium",
-    price: "$119",
+    name: "MVP Sprint",
+    price: "$20",
     period: "/month",
     features: [
       "Consequat ex prsident",
       "Deserunt sit cupidatat",
       "Amet id ea et nisi cillum",
-      "Premium support 24/7",
-      "Advanced analytics",
     ],
     isPopular: false,
   },
@@ -94,9 +92,14 @@ export default function Pricing() {
   }, []);
 
   return (
-    <section id="pricing" className="relative bg-white my-90 " ref={sectionRef}>
+    <section
+      id="pricing"
+      className="relative bg-white py-0 overflow-hidden md:overflow-visible"
+      ref={sectionRef}
+      
+    >
       {/* Black Section with Rotating Background */}
-      <div className="relative  sm:px-6 lg:px-8 min-h-screen flex items-center">
+      <div className="relative my-[34vh] px-0 sm:px-6 lg:px-8 min-h-screen flex items-center overflow-hidden md:overflow-visible">
         {/* Display dimensions in development mode */}
         {/* {process.env.NODE_ENV === "development" && (
           // <div className="absolute top-4 right-4 bg-black text-white p-2 rounded z-50 text-xs">
@@ -106,7 +109,7 @@ export default function Pricing() {
         )} */}
 
         <motion.div
-          className="absolute inset-0 flex items-center justify-center"
+          className="absolute inset-0 flex items-center justify-center overflow-hidden md:overflow-visible"
           initial={{ rotate: 180 }}
           whileInView={{ rotate: 0 }}
           viewport={{ once: true, amount: 0.3 }}
@@ -116,12 +119,15 @@ export default function Pricing() {
             stiffness: 50,
             damping: 20,
           }}
+          style={{ willChange: "transform" }}
         >
           <svg
             viewBox="0 0 1440 1900"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             style={{ width: "130%", height: "130%" }}
+            // preserveAspectRatio="xMidYMid slice"
+            className="my-20"
             // preserveAspectRatio="none" // Ensure the SVG fits within the container"
 
           >
@@ -132,10 +138,10 @@ export default function Pricing() {
           </svg>
         </motion.div>
 
-        <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 max-w-7xl mx-auto w-full px-0 sm:px-6 lg:px-8 py-16">
           {/* Pricing Title */}
           <motion.h2
-            className="text-4xl md:text-5xl font-bold  text-center mb-26 text-white"
+            className="text-4xl md:text-5xl font-bold text-center mb-16 text-white"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -145,10 +151,10 @@ export default function Pricing() {
           </motion.h2>
 
           {/* Pricing Cards Container */}
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
             {/* Top Row with Two Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              {/* Left Card - Fade in from left */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-6 md:mb-8 max-w-4xl mx-auto">
+              {/* Left Card (4-month) - Fade in from left */}
               <motion.div
                 initial={{ opacity: 0, x: -100 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -156,10 +162,9 @@ export default function Pricing() {
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
                 <Card className="h-full bg-white rounded-2xl border border-gray-200 shadow-lg transition-all duration-300 hover:shadow-xl">
-                  
                   <CardHeader className="text-center pb-6 pt-8">
                     <CardTitle className="text-xl font-bold text-gray-800 mb-3">
-                      Basic
+                      4-month
                     </CardTitle>
                     <div className="flex items-baseline justify-center gap-1">
                       <span className="text-4xl font-bold text-gray-900">
@@ -199,40 +204,36 @@ export default function Pricing() {
                     </ul>
 
                     {/* CTA Button */}
-                    <Button className="w-full bg-gray-900 text-white hover:bg-gray-800 rounded-lg py-5 text-base font-semibold transition-all duration-300 hover:shadow-lg">
+                    <Button className="w-full bg-white text-blue-600 border-2 border-blue-600 hover:bg-blue-50 rounded-lg py-5 text-base font-semibold transition-all duration-300 hover:shadow-lg">
                       Get started
                     </Button>
                   </CardContent>
                 </Card>
               </motion.div>
 
-              {/* Right Card - Fade in from right */}
+              {/* Right Card (3-month - Most Popular) - Fade in from right */}
               <motion.div
                 initial={{ opacity: 0, x: 100 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
+                className="relative"
               >
-                <Card className="h-full rounded-2xl border-2 border-blue-500 bg-gradient-to-b from-white to-gray-50 shadow-xl ring-2 ring-blue-500 transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 relative">
-                  {/* Most Popular Badge */}
-                  <div className="absolute -top-14 left-1/2 -translate-x-1/2 z-20">
-                    <Badge className="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-30 py-3 text-lg rounded-lg font-semibold shadow-lg">
-                      Most Popular ✨
-                    </Badge>
-                  </div>
-
-              
-                  <CardHeader className="text-center pb-6 pt-10 relative">
-                    
-
-                    <CardTitle className="text-xl font-bold text-blue-600 mb-3">
-                      Essential
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
+                  <Badge className="bg-blue-600 text-white px-3 py-1 text-xs rounded font-semibold shadow-lg">
+                    Most popular ✨
+                  </Badge>
+                </div>
+                <Card className="h-full rounded-2xl border-2 border-blue-500 bg-white shadow-xl transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                  <CardHeader className="text-center pb-6 pt-8">
+                    <CardTitle className="text-xl font-bold text-gray-800 mb-3">
+                      3-month
                     </CardTitle>
                     <div className="flex items-baseline justify-center gap-1">
-                      <span className="text-5xl font-bold text-blue-600">
-                        $59
+                      <span className="text-4xl font-bold text-gray-900">
+                        $15
                       </span>
-                      <span className="text-lg text-blue-500">/month</span>
+                      <span className="text-base text-gray-600">/month</span>
                     </div>
                   </CardHeader>
 
@@ -243,7 +244,7 @@ export default function Pricing() {
                         <div className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mt-0.5">
                           <Check className="w-3 h-3 text-blue-600" />
                         </div>
-                        <span className="text-gray-800 font-medium">
+                        <span className="text-gray-700">
                           Consequat ex prsident
                         </span>
                       </li>
@@ -251,7 +252,7 @@ export default function Pricing() {
                         <div className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mt-0.5">
                           <Check className="w-3 h-3 text-blue-600" />
                         </div>
-                        <span className="text-gray-800 font-medium">
+                        <span className="text-gray-700">
                           Deserunt sit cupidatat
                         </span>
                       </li>
@@ -259,16 +260,8 @@ export default function Pricing() {
                         <div className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mt-0.5">
                           <Check className="w-3 h-3 text-blue-600" />
                         </div>
-                        <span className="text-gray-800 font-medium">
+                        <span className="text-gray-700">
                           Amet id ea et nisi cillum
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mt-0.5">
-                          <Check className="w-3 h-3 text-blue-600" />
-                        </div>
-                        <span className="text-gray-800 font-medium">
-                          Extra feature included
                         </span>
                       </li>
                     </ul>
@@ -282,24 +275,23 @@ export default function Pricing() {
               </motion.div>
             </div>
 
-            {/* Bottom Row with One Card - Fade up from bottom */}
+            {/* Bottom Row with One Card (MVP Sprint) - Fade up from bottom */}
             <div className="flex justify-center">
               <motion.div
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="w-full max-w-md"
+                className="w-full max-w-md px-4 sm:px-0"
               >
                 <Card className="h-full bg-white rounded-2xl border border-gray-200 shadow-lg transition-all duration-300 hover:shadow-xl">
-               
                   <CardHeader className="text-center pb-6 pt-8">
                     <CardTitle className="text-xl font-bold text-gray-800 mb-3">
-                      Premium
+                      MVP Sprint
                     </CardTitle>
                     <div className="flex items-baseline justify-center gap-1">
                       <span className="text-4xl font-bold text-gray-900">
-                        $119
+                        $20
                       </span>
                       <span className="text-base text-gray-600">/month</span>
                     </div>
@@ -332,26 +324,10 @@ export default function Pricing() {
                           Amet id ea et nisi cillum
                         </span>
                       </li>
-                      <li className="flex items-start gap-3">
-                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center mt-0.5">
-                          <Check className="w-3 h-3 text-gray-600" />
-                        </div>
-                        <span className="text-gray-700">
-                          Premium support 24/7
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center mt-0.5">
-                          <Check className="w-3 h-3 text-gray-600" />
-                        </div>
-                        <span className="text-gray-700">
-                          Advanced analytics
-                        </span>
-                      </li>
                     </ul>
 
                     {/* CTA Button */}
-                    <Button className="w-full bg-gray-900 text-white hover:bg-gray-800 rounded-lg py-5 text-base font-semibold transition-all duration-300 hover:shadow-lg">
+                    <Button className="w-full bg-white text-blue-600 border-2 border-blue-600 hover:bg-blue-50 rounded-lg py-5 text-base font-semibold transition-all duration-300 hover:shadow-lg">
                       Get started
                     </Button>
                   </CardContent>

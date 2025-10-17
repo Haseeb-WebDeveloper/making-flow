@@ -15,6 +15,7 @@ export default function Home() {
   // Refs for sections
   const whatWeDoRef = useRef<HTMLDivElement>(null);
   const pricingRef = useRef<HTMLDivElement>(null);
+  const faqRef = useRef<HTMLDivElement>(null);
 
   // Scroll to top on page load/refresh
   useEffect(() => {
@@ -39,6 +40,11 @@ export default function Home() {
         behavior: "smooth",
         block: "start",
       });
+    } else if (section === "faq" && faqRef.current) {
+      faqRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   };
 
@@ -56,22 +62,34 @@ export default function Home() {
       <div className="relative z-20">
         <VideoBrands />
       </div>
+      <hr className="border-1px w-[90vw] justify-center mx-auto border-gray-300 mt-20 mb-10"/>
 
       {/* What We Do Section */}
       <div ref={whatWeDoRef}>
         <WhatWeDo />
       </div>
 
+<hr className="border-1px w-[90vw] justify-center mx-auto border-gray-300 mt-10 mb-10"/>
+
+
       {/* Why Flow Section */}
       <WhyFlow />
+
+
+
 
       {/* Pricing Section */}
       <div ref={pricingRef}>
         <Pricing />
       </div>
 
+      <hr className="border-1px w-[90vw] justify-center mx-auto border-gray-300 my-20"/>
+
+
       {/* FAQ Section */}
-      <FAQ />
+      <div ref={faqRef}>
+        <FAQ />
+      </div>
 
       {/* CTA Section */}
       <CTA />

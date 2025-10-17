@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 import { useRef } from "react";
 
 interface TimelineItem {
@@ -18,7 +19,7 @@ const timeline: TimelineItem[] = [
       "We use AI to save time, turning that speed into a tangible cost reduction for our clients.",
     backgroundText: "Adapt.",
     position: "left",
-    icon: "⏱️",
+    icon: "/Rectangle3.svg",
   },
   {
     title: "We are pioneers in innovation and research,",
@@ -26,7 +27,7 @@ const timeline: TimelineItem[] = [
       "With a team that has been working with AI since the very start of the revolution and has always been an early adopter in the evolution of new products.",
     backgroundText: "Build.",
     position: "right",
-    icon: "🔬",
+    icon: "/Rectangle2.svg",
   },
   {
     title: "We Are Part Of A Multidisciplinary Group,",
@@ -34,7 +35,7 @@ const timeline: TimelineItem[] = [
       "That enables us to deliver complete products with strong UX, fully ready to go to market.",
     backgroundText: "Flow.",
     position: "left",
-    icon: "💻",
+    icon: "/Rectangle1.svg",
   },
 ];
 
@@ -64,28 +65,29 @@ export default function WhyFlow() {
   const opacities = [opacity1, opacity2, opacity3];
 
   // Transform scroll progress for each dot color
-  // Dots turn blue as the timeline line reaches them
+  // Dots turn blue exactly when the timeline line reaches them
+  // Adjusted to match the natural spacing of timeline items
   const dotColor1 = useTransform(
     scrollYProgress,
-    [0, 0.33],
-    ["#d1d5db", "#2563eb"]
+    [0.10, 0.15],
+    ["#808080", "#1A68E4"]
   );
   const dotColor2 = useTransform(
     scrollYProgress,
-    [0.33, 0.66],
-    ["#d1d5db", "#2563eb"]
+    [0.45, 0.50],
+    ["#808080", "#1A68E4"]
   );
   const dotColor3 = useTransform(
     scrollYProgress,
-    [0.66, 1],
-    ["#d1d5db", "#2563eb"]
+    [0.82, 0.87],
+    ["#808080", "#1A68E4"]
   );
 
   const dotColors = [dotColor1, dotColor2, dotColor3];
 
   return (
     <section ref={sectionRef} className="bg-white py-20 px-8 relative">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-[90vw] mx-auto">
         <motion.h2
           className="text-4xl md:text-6xl font-bold mb-20 text-left"
           initial={{ opacity: 0, y: 20 }}
@@ -111,7 +113,7 @@ export default function WhyFlow() {
 
           {/* Right Timeline Line - Animated (blue) - Visible only on mobile */}
           <motion.div
-            className="md:hidden absolute right-0 top-0 w-1 bg-blue-600 origin-top"
+            className="md:hidden absolute right-0 top-1 w-1 bg-blue-600 origin-top"
             style={{ height: timelineHeight }}
           />
 
@@ -119,7 +121,7 @@ export default function WhyFlow() {
             {timeline.map((item, index) => (
               <div
                 key={index}
-                className="relative flex items-center justify-between"
+                className="relative flex items-center justify-between pb-30"
               >
                 {/* Background Text with scroll-based opacity - Mobile positioning */}
                 <motion.div
@@ -139,8 +141,8 @@ export default function WhyFlow() {
                 <motion.div
                   className={`absolute hidden md:block text-[8rem] lg:text-[12rem] font-bold text-gray-200 leading-none pointer-events-none ${
                     item.position === "left"
-                      ? "left-1/2 ml-16"
-                      : "right-1/2 mr-16"
+                      ? "left-1/2 pl-44"
+                      : "right-1/2 pr-44"
                   }`}
                   style={{
                     top: "50%",
@@ -155,7 +157,7 @@ export default function WhyFlow() {
                 {item.position === "left" ? (
                   <div className="hidden md:block w-1/2 pr-16">
                     <motion.div
-                      className="flex flex-col items-end text-right"
+                      className="flex flex-col items-start text-left"
                       initial={{
                         opacity: 0,
                         x: -50,
@@ -169,7 +171,16 @@ export default function WhyFlow() {
                       }}
                     >
                       {/* Icon */}
-                      <div className="text-6xl mb-6">{item.icon}</div>
+                      <div className="mb-6">
+                        <Image
+                          width={100}
+                          height={100}
+                          className="w-[300px] h-[300px]"
+                          src={item.icon}
+                          alt={item.title}
+                          unoptimized={true}
+                        />
+                      </div>
 
                       {/* Title */}
                       <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
@@ -188,15 +199,17 @@ export default function WhyFlow() {
 
                 {/* Timeline Dot - Desktop */}
                 <motion.div
-                  className="hidden md:block absolute left-1/2 top-1/2 w-6 h-6 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10"
-                  style={{ backgroundColor: dotColors[index] }}
+                  className="hidden md:block absolute left-1/2 w-6 h-6 rounded-full transform -translate-x-1/2 z-10"
+                  style={{
+                    backgroundColor: dotColors[index],
+                  }}
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: 0.3 }}
                 >
                   <motion.div
-                    className="absolute inset-0 rounded-full animate-ping opacity-20"
+                    className="absolute inset-0 rounded-full"
                     style={{ backgroundColor: dotColors[index] }}
                   ></motion.div>
                 </motion.div>
@@ -205,7 +218,7 @@ export default function WhyFlow() {
                 {item.position === "right" ? (
                   <div className="hidden md:block w-1/2 pl-16">
                     <motion.div
-                      className="flex flex-col items-start text-left"
+                      className="flex flex-col items-end text-right"
                       initial={{
                         opacity: 0,
                         x: 50,
@@ -219,7 +232,16 @@ export default function WhyFlow() {
                       }}
                     >
                       {/* Icon */}
-                      <div className="text-6xl mb-6">{item.icon}</div>
+                      <div className="mb-6">
+                        <Image
+                          width={100}
+                          height={100}
+                          className="w-[300px] h-[300px]"
+                          src={item.icon}
+                          alt={item.title}
+                          unoptimized={true}
+                        />
+                      </div>
 
                       {/* Title */}
                       <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
@@ -253,7 +275,16 @@ export default function WhyFlow() {
                     }}
                   >
                     {/* Icon */}
-                    <div className="text-4xl md:text-6xl mb-4">{item.icon}</div>
+                    <div className="mb-4">
+                      <Image
+                        width={100}
+                        height={100}
+                        className="w-[300px] h-[300px]"
+                        src={item.icon}
+                        alt={item.title}
+                        unoptimized={true}
+                      />
+                    </div>
 
                     {/* Title */}
                     <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
@@ -269,15 +300,17 @@ export default function WhyFlow() {
 
                 {/* Timeline Dot - Mobile */}
                 <motion.div
-                  className="md:hidden absolute right-0 top-1/2 w-4 h-4 rounded-full transform translate-x-1/2 -translate-y-1/2 z-10"
-                  style={{ backgroundColor: dotColors[index] }}
+                  className="md:hidden absolute right-0 w-5 h-5 rounded-full transform translate-x-1/2 z-10"
+                  style={{
+                    backgroundColor: dotColors[index],
+                  }}
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: 0.3 }}
                 >
                   <motion.div
-                    className="absolute inset-0 rounded-full animate-ping opacity-20"
+                    className="absolute inset-0 rounded-full"
                     style={{ backgroundColor: dotColors[index] }}
                   ></motion.div>
                 </motion.div>
